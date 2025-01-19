@@ -1,0 +1,12 @@
+{% extends 'myapp/base.html' %}
+
+
+{% block title %}Form Page{% endblock %}
+
+{% block content %}
+
+<h2>Form Submitted Successfully!</h2>
+<p>Thank you for submitting the form.</p>
+<a href="{% url 'form' %}">Go Back</a>
+
+{% endblock %}

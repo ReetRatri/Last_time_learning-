@@ -1,0 +1,43 @@
+{% extends 'myapp/base.html' %}
+
+
+{% block title %}Form Page{% endblock %}
+
+{% block content %}
+<h2>Enter you details.</h2>
+<h6>Will contact you soon....</h6>
+
+<form method="POST">
+    {% csrf_token %}
+    <div class="">
+        <div class="mb-3">
+            <label for="name" class="form-label">Full Name:</label>
+            <input type="text" id="name" name="name" class="form-control" required>
+        </div>
+
+        <!-- Email Input -->
+        <div class="mb-3">
+            <label for="email" class="form-label">Email Address:</label>
+            <input type="email" id="email" name="email" class="form-control" required>
+        </div>
+
+        <!-- Password Input -->
+        <div class="mb-3">
+            <label for="password" class="form-label">Password:</label>
+            <input type="password" id="password" name="password" class="form-control" required>
+        </div>
+
+        <!-- Gender Radio Buttons -->
+        <div class="mb-3">
+            <label class="form-label">Gender:</label><br>
+            <input type="radio" id="male" name="gender" value="male" required>
+            <label for="male">Male</label>
+            <input type="radio" id="female" name="gender" value="female">
+            <label for="female">Female</label>
+        </div>
+        <!-- submit button -->
+        <div> <button type="submit" class="btn btn-primary">Submit</button></div>
+
+    </div>
+</form>
+{% endblock %}

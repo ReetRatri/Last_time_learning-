@@ -11,3 +11,22 @@ class Item(models.Model):
 
     def __str__(self):
         return self.name
+    
+class Students(models.Model):
+    gender_choice = (('Male' , 'Male') , ('Female' , 'Female'))
+    name = models.CharField(max_length=100)
+    number = models.CharField(max_length=10)
+    Email = models.EmailField()
+    gender = models.CharField(max_length=10 ,choices=gender_choice , default='Male')
+    Profile_image = models.ImageField(null = True , blank=True , upload_to='myapp')
+
+
+class Formdata(models.Model):
+    # class Meta:
+    #    __all__ = ["Formdata"]
+
+
+    name = models.CharField(max_length=100)
+    email = models.EmailField()
+    password = models.CharField(max_length=100)
+    gender = models.CharField(max_length=10 ,choices=[('male', 'Male'), ('female', 'Female')], default='Male')
