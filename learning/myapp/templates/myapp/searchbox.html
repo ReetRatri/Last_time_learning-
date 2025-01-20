@@ -1,0 +1,45 @@
+{% extends 'myapp/base.html' %}
+
+
+{% block title %}Form Page{% endblock %}
+
+{% block content %}
+
+<form method="GET">
+<div class="container">
+<div class= "searchbox container col-6 ">
+    <input class="form_control search_box" type="text" placeholder="Search" name="search_box" value="{{search}}" > <button type="submit">Search</button>
+</div>
+</form>
+    <table class="table table-striped">
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Name</th>
+            <th scope="col">Email</th>
+            <th scope="col">Password</th>
+            <th scope="col">College</th>
+            <th scope="col">Gender</th>
+          </tr>
+        </thead>
+        <tbody>
+            {% for student in students %}
+          <tr>
+            <th scope="row">{{forloop.counter}}</th>
+            <td>{{student.name}}</td>
+            <td>{{student.email}}</td>
+            <td>{{student.password}}</td>
+            <td>{{student.college.college_name}}</td>
+            <td>{{student.gender}}</td>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+
+</div>
+
+
+
+
+
+{% endblock %}

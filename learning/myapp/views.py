@@ -3,8 +3,10 @@ from django.shortcuts import render ,redirect
 # Create your views here.
 from .models import Item
 from .models import *
-
+from .models import Formdata
+from django.db.models import Q
 from .forms import Itemform
+
 
 # create
 def create_item(request):
@@ -44,3 +46,45 @@ def delete_item(request, pk):
         item.delete()
         return redirect('item_list')
     return render(request, 'myapp/item_confirm_delete.html', {'item': item})
+
+
+def form(request):
+    if request.method=="POST":
+        name = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+        gender = request.POST.get('gender')
+
+        print(name , email , password , gender)
+
+        # formdata = Formdata(name , email , password , gender)
+        formdata = Formdata(name=name, email=email, password=password, gender=gender)
+        formdata.save()
+
+        return redirect('success')
+
+
+    return render(request, 'myapp/form.html')
+
+def success_view(request):
+    return render(request, 'myapp/success.html')
+
+def searchbox(request):
+    students = Formdata.objects.all()
+    # college = students.college.
+    search = request.GET.get('search_box')
+    print(search)
+    print('--------------------------------')
+    print('--------------------------------')
+    print('--------------------------------')
+    print('--------------------------------')
+
+    # search_box = request.Get
+    if search:
+        students = students.filter(Q(name__icontains =search) |  Q(email__icontains=search) | Q(college__college_name__icontains = search) | Q(gender__icontains=search))
+        # email = students.filter(email__icontains =search)
+        
+
+    context = {'students' :students , 'search':search  }
+    # print(context)
+    return render(request ,  'myapp/searchbox.html' , context)
