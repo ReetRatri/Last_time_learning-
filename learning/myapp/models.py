@@ -21,6 +21,12 @@ class Students(models.Model):
     Profile_image = models.ImageField(null = True , blank=True , upload_to='myapp')
 
 
+class College_Formdata(models.Model):
+    college_name = models.CharField(max_length=100)
+    college_address = models.CharField(max_length=100)
+    
+
+
 class Formdata(models.Model):
     # class Meta:
     #    __all__ = ["Formdata"]
@@ -29,4 +35,10 @@ class Formdata(models.Model):
     name = models.CharField(max_length=100)
     email = models.EmailField()
     password = models.CharField(max_length=100)
+    college = models.ForeignKey(
+        College_Formdata,  # Ensure College_Formdata model exists
+        on_delete=models.CASCADE,  
+        null=True,  
+        blank=True  
+    )    
     gender = models.CharField(max_length=10 ,choices=[('male', 'Male'), ('female', 'Female')], default='Male')
