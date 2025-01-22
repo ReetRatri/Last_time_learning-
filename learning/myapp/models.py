@@ -42,3 +42,9 @@ class Formdata(models.Model):
         blank=True  
     )    
     gender = models.CharField(max_length=10 ,choices=[('male', 'Male'), ('female', 'Female')], default='Male')
+
+
+class Persons(models.Model):
+    person_name = models.CharField(max_length=100)
+    address = models.CharField(max_length=100)
+    phone_number = models.CharField(max_length=10)
