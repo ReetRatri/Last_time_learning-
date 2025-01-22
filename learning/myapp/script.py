@@ -35,5 +35,22 @@ def scripting_db(records=82) -> None:
 
 
 
+def bulkrecords(number):
+    # number =10000
+    print(number)
+    # create = [Persons(person_name = fake.name() , address = fake.address() , phone_number = fake.phone_number() ) for _ in range (10000)]
+
+    # Persons.objects.bulk_create(create)
+    for i in range(10000):
+        Persons.objects.create(
+            person_name = fake.name() ,
+            address = fake.address() ,
+            phone_number = fake.phone_number()
+        )
 
 
+def bulkdelete(numer):
+    numer = 10000
+    Persons.objects.all().delete()
+
+# bulkrecords(10000)

@@ -87,4 +87,4 @@ def searchbox(request):
 
     context = {'students' :students , 'search':search  }
     # print(context)
-    return render(request ,  'myapp/searchbox.html' , context)
+    return render(request ,  'myapp/searchbox.html' , context) 
