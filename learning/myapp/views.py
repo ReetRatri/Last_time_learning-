@@ -7,6 +7,16 @@ from .models import Formdata
 from django.db.models import Q
 from .forms import Itemform
 
+from django.http import HttpResponse ,JsonResponse
+
+
+def index(request):
+    
+    data = {
+        'status' : True , 
+        'message' : 'django server'
+    }
+    return JsonResponse(data)
 
 # create
 def create_item(request):
@@ -88,3 +98,5 @@ def searchbox(request):
     context = {'students' :students , 'search':search  }
     # print(context)
     return render(request ,  'myapp/searchbox.html' , context) 
+
+
