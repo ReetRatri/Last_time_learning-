@@ -8,8 +8,11 @@ from django.db.models import Q
 from .forms import Itemform
 
 from django.http import HttpResponse ,JsonResponse
-
-
+from django.contrib.auth.models import User
+from django.contrib import messages
+from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth.decorators import login_required
+from django.contrib.auth import logout
 def index(request):
     
     data = {
@@ -76,8 +79,6 @@ def form(request):
 
     return render(request, 'myapp/form.html')
 
-def success_view(request):
-    return render(request, 'myapp/success.html')
 
 def searchbox(request):
     students = Formdata.objects.all()
@@ -100,3 +101,89 @@ def searchbox(request):
     return render(request ,  'myapp/searchbox.html' , context) 
 
 
+
+
+
+def login_portal(request):
+    print(request.user)
+    if request.method == 'POST':
+        
+        username = request.POST.get('username')
+        password = request.POST.get('password')
+
+        print(username , password)
+        print(username , password)
+        print(username , password)
+        print(username , password)
+        print(username , password)
+        print(username , password)
+        print(username , password)
+
+        user_obj =User.objects.filter(username = username)
+        
+        if not user_obj.exists():
+            messages.error(request, ' username does not exist')
+            return redirect('/')
+        
+        if True:
+            print(authenticate(username = username , password = password ))
+        
+        user_obj = authenticate(username = username , password = password )
+        
+
+        if not user_obj:
+            messages.error(request, 'Invalid credentials')
+
+            return redirect('/login/') 
+        
+        
+        login( request ,user_obj)
+        messages.error(request, 'u got it.')
+        return redirect('/success/')
+    return render(request , 'myapp/login.html')
+
+
+
+
+def registration_portal(request):
+    if request.method == 'POST':
+        username = request.POST.get('name')
+        email = request.POST.get('email')
+        password = request.POST.get('password')
+
+        print('-----------------------------------')
+        print('-----------------------------------')
+        print('-----------------------------------')
+        print(username , email , password)
+
+        user_obj = User.objects.filter(Q(email=email) | Q(username=username))
+
+        if user_obj.exists():
+            messages.error(request , 'Username already exists')
+            return redirect('/')
+        user_obj = User.objects.create(
+            username=username, 
+            email=email
+            )
+
+        # user_obj = User(username=username, email=email)
+        user_obj.set_password(password)  # Hash the password before saving
+        user_obj.save()
+        messages.error(request , 'Success account created.')
+
+
+    return render(request , 'myapp/registration.html')
+
+
+@login_required(login_url='/login/')
+def success_view(request):
+    # if request.user.is_authenticated:
+    #     print('yes')
+    #     print(request.user)
+
+    return render(request, 'myapp/success.html')
+
+def logout_portal(request):
+    logout(request)  # Log the user out
+    messages.success(request, 'You have been logged out successfully.')
+    return redirect('/')  # Redirect to homepage or login page
