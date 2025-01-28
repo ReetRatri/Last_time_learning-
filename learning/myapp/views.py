@@ -187,3 +187,11 @@ def logout_portal(request):
     logout(request)  # Log the user out
     messages.success(request, 'You have been logged out successfully.')
     return redirect('/')  # Redirect to homepage or login page
+ 
+
+
+
+#  customizing User model
+# Djago usermodel provise 2 classes for customizing
+# 1. Abstract User
+# 2. Abstract Base User
