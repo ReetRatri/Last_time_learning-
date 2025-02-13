@@ -1,6 +1,6 @@
 from django.http import HttpResponseForbidden
 
-Allowed_ip = ["123.23.23.23" , "123.23.23.24"]
+Allowed_ip = ["123.2kjiojoi3.23.23" , "123.23.23.24" ,"127.0.0.1:8000"]
 class ipBlockingMiddleware:
     # init
     # process request 
