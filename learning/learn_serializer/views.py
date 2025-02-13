@@ -3,8 +3,9 @@ from rest_framework.permissions import AllowAny
 from rest_framework.response import Response
 from rest_framework import status
 from django.shortcuts import get_object_or_404
-from .models import Book
-from .serializers import Book_serializer
+from .models import Book ,Author
+from .serializers import Book_serializer ,Author_serializer
+
 
 @api_view(['GET', 'POST', 'PUT', 'PATCH', 'DELETE'])
 @permission_classes([AllowAny])  # Allow all users to access
@@ -49,3 +50,57 @@ def book_list(request):
 
         book.delete()  # Delete the book
         return Response({'message': 'book deleted successfully'}, status=status.HTTP_200_OK)
+
+@api_view(['POST' , 'GET' , 'DELETE'])
+@permission_classes([AllowAny])
+def author_list(request):
+    
+    if request.method == 'POST':
+        serializer = Author_serializer(data=request.data)
+        if not serializer.is_valid():
+            return Response(
+                {
+                    "status" : False , 
+                    "message" : "Invalid data" ,
+                    "errors" : serializer.errors
+                    
+                    },
+                    status=status.HTTP_400_BAD_REQUEST
+                    )
+        print(serializer.validated_data)
+        author = serializer.save()
+        
+        
+        return Response(
+                {
+                    "status" : True , 
+                    "message" : " recoded" ,
+                    "errors" : serializer.data
+                    
+                    },
+                   status=status.HTTP_201_CREATED
+                    )
+    elif request.method == 'GET':
+        print(',ethod is get')
+        authors = Author.objects.all()  
+        serializer = Author_serializer(authors, many=True)
+        if not serializer.data:
+            return Response({'error': 'no authors found'}, status=status.HTTP_404_NOT_FOUND)
+        return Response(serializer.data, status=status.HTTP_200_OK)
+            
+       
+    elif request.method == 'DELETE':
+        author = request.data.get('author')
+        try:
+            author = Author.objects.get(author=author)
+            
+        except Author.DoesNotExist:
+            return Response({'message': 'author not found'}, status=status.HTTP_404_NOT_FOUND)
+        
+        author.delete()
+        return Response({'message': 'done'})
+
+
+            
+
+        
